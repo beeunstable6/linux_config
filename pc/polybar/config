@@ -1,0 +1,152 @@
+[bar/primaryBar]
+monitor = HDMI-0 
+width = 100%
+height = 30
+background = #EF1f1f1f
+foreground = #c6c6c6
+line-size = 4
+
+font-0 = Droid Sans Mono:style=Regular:size=10
+font-1 = Font Awesome 5 Free
+font-2 = Font Awesome 5 Free Solid
+font-3 = Font Awesome 5 Brands
+
+modules-left = i3
+modules-center = media pulseaudio-control 
+modules-right =  updates 
+
+[bar/secondaryBar]
+monitor = DVI-I-0
+width = 100%
+height = 30
+background = #EF1f1f1f
+foreground = #c6c6c6
+line-size = 3 
+
+font-0 = Droid Sans Mono:style=Regular:size=10
+font-1 = Font Awesome 5 Free
+font-2 = Font Awesome 5 Free Solid
+font-3 = Font Awesome 5 Brands
+
+modules-left = power-menu 
+modules-center = time
+modules-right = i3
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #828282
+label-mode-background = #1f1f1f
+
+label-focused = %index%
+click-left = ~/.config/polybar/change_audio.sh
+label-focused-background = #8abeb7
+label-focused-foreground = #1f1f1f
+label-focused-padding = 2
+
+
+label-unfocused = %index%
+label-unfocused-background = #1f5951
+label-unfocused-foreground = #8abeb7
+label-unfocused-padding = 2
+
+label-visible = %index%
+label-visible-background = #1f5951
+label-visible-foreground = #8abeb7
+label-visible-padding = 2
+
+label-urgent = %index%
+label-urgent-background = #1f5951
+label-urgent-padding = 2
+
+[module/media]
+type = custom/script
+tail = true
+exec = ~/.config/polybar/get_media_status.sh
+label-foreground = #8abeb7
+click-left = "playerctl next"
+click-middle = "playerctl play-pause"
+click-right = "playerctl previous"
+
+[module/time]
+type = internal/date
+
+interval = 1 
+date = %Y-%m-%d%
+time = "%r"
+
+format = <label>
+format-foreground = #8abeb7
+
+label =  %date%   %time%
+label-foreground = #8abeb7
+
+[module/power-menu]
+type = custom/menu
+expand-right = true
+
+
+label-open = 
+label-open-padding = 2
+label-open-foreground = #8abeb7
+label-close = 
+label-close-padding = 2
+label-close-foreground = #c77060
+
+; shutwdown
+menu-0-0 = 
+menu-0-0-padding = 1
+menu-0-0-foreground = #8abeb7
+menu-0-0-exec = "i3exit shutdown"
+
+; restart
+menu-0-1 = 
+menu-0-1-padding = 1
+menu-0-1-foreground = #8abeb7
+menu-0-1-exec = "i3exit reboot"
+
+; lock 
+menu-0-2 = 
+menu-0-2-padding = 1
+menu-0-2-foreground = #8abeb7
+menu-0-2-exec = "i3exit lock"
+
+[module/pulseaudio-control]
+type = custom/script
+tail = true
+label=%output%
+
+exec = ~/.config/polybar/pulseaudio-control.bash listen
+click-middle = exec pavucontrol &
+click-left = ~/.config/polybar/pulseaudio-control.bash togmute
+click-right = ~/.config/polybar/pulseaudio-control.bash next-sink
+scroll-up = ~/.config/polybar/pulseaudio-control.bash up
+scroll-down = ~/.config/polybar/pulseaudio-control.bash down
+label-padding = 1 
+label-foreground = #8abeb7
+
+[module/kdeconnect]
+type = custom/script
+exec = ~/.config/polybar/kdeconnect.sh -d
+label-padding = 1
+label-foreground = #8abeb7
+tail = true
+
+[module/updates]
+type = custom/script
+exec = ~/.config/polybar/updates.sh
+label-padding = 1
+label-foreground = #8abeb7
+interval = 600
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
