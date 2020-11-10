@@ -1,0 +1,2 @@
+python sierpinsky.py
+PAUSE

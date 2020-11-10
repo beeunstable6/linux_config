@@ -1,0 +1,3 @@
+
+
+nAnd :: Bool -> Bool -> Bool 
